@@ -14,7 +14,7 @@ public class Record {
     private Double bancoPlano;
     private Double pesoMuerto;
 
-    private Double calculaTotal() {
+    public Double calcularTotal() {
 
         return (sentadilla != null ? sentadilla: 0.0) +
                 (bancoPlano != null ? bancoPlano: 0.0) +
