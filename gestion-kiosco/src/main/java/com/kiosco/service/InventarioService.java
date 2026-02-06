@@ -27,6 +27,24 @@ public class InventarioService {
         }
     }
 
+    public void mostrarInventario() {
+        System.out.println("\n========= INVENTARIO ACTUAL =========");
+
+        // 1. Lógica defensiva: ¿La lista está vacía?
+        if (this.listaProductos.isEmpty()) {
+            System.out.println("El inventario está vacío. Carga algún producto primero");
+        } else {
+            // 2. Recorremos la lista con un for-each
+            for (Producto p : listaProductos) {
+                System.out.println("ID: " + p.getId() +
+                        " | Nombre: " + p.getNombre() +
+                        " | Stock: " + p.getStock() +
+                        " | Precio Venta: $" + p.getPrecioVenta());
+            }
+        }
+        System.out.println("=====================================\n");
+    }
+
     public void realizarVenta(String nombreProducto,int cantidad) {
         for (Producto p : listaProductos) {
             if (p.getNombre().equalsIgnoreCase(nombreProducto)) {
