@@ -1,42 +1,51 @@
 package com.kiosco.service;
 
 import com.kiosco.model.Producto;
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class InventarioService {
 
     private List<Producto > listaProductos;
+    private  double cajaDiaria; // atributo para el dinero acumulado.
 
     public InventarioService() {
         this.listaProductos = new ArrayList<>();
+        this.cajaDiaria = 0.0; // se empieza el dia en cero
     }
 
     public void agregarProducto(Producto p) {
-        listaProductos.add(p);
-        System.out.println("Producto agregado: " + p.getNombre());
-    }
-
-    public void mostrarInventario() {
-        System.out.println("--- Inventario actual ---");
-        for (Producto p : listaProductos) {
-            System.out.println(p.getNombre() + " - Stock: " + p.getStock() + " - precio: $" + p.getPrecioVenta());
+        if (p != null) {
+            this.listaProductos.add(p);
+            System.out.println("Cargadp con éxito: " + p.getNombre());
+        }else {
+            System.out.println("Error: el producto no puede ser nulo");
         }
     }
-    public void realizarVenta(String nombreProducto, int cantidad){
 
+    public void realizarVenta(String nombreProducto,int cantidad) {
         for (Producto p : listaProductos) {
-
             if (p.getNombre().equalsIgnoreCase(nombreProducto)) {
                 if (p.getStock() >= cantidad) {
-                    p.stock(p.getStock() - cantidad);
-                    double total = p.getPrecioVenta() * cantidad;
-                    System.out.println("Venta realizada: " + cantidad + "x " + nombreProducto + " | Total: $" + total);
+                    p.setStock(p.getStock() - cantidad);
+                    double totalVenta = p.getPrecioVenta() * cantidad;
+                    // sumamos el total de la venta a nuestra caja
+                    this.cajaDiaria += totalVenta;
+                    System.out.println("Venta exitosa: " +nombreProducto + " x" + cantidad);
+                    System.out.println("Total a cobrar: " + totalVenta);
                 } else {
-                    System.out.println("Error: Stock insuficiente de " + nombreProducto);
+                    System.out.println("Error: no hay suficiente stock de " + nombreProducto);
                 } return;
             }
         }
-        System.out.println("Error: producto no encontrado");
+        System.out.println("Error: producto no encontrado.");
     }
+    public void mostrarCaja() {
+        System.out.println("---------------------------");
+        System.out.println("Dinero total en caja: $" + this.cajaDiaria);
+        System.out.println("---------------------------");
+    }
+
 }
