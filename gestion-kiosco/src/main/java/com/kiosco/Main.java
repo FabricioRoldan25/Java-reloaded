@@ -8,7 +8,7 @@ public class Main {
         // instanciamos nuestro servicio (gestor de kiosco)
         InventarioService kiosco = new InventarioService();
 
-        kiosco.agregarProducto(new Producto(1L, "Alfajor", 1600.0, 2300.0, 30));
+        kiosco.agregarProducto(new Producto(1L, "Alfajor", 1600.0, 1300.0, 30));
 
         kiosco.realizarVenta("Alfajor", 3);
         kiosco.realizarVenta("alfajor", 5);

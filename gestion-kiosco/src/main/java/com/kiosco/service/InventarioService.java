@@ -30,14 +30,28 @@ public class InventarioService {
     public void realizarVenta(String nombreProducto,int cantidad) {
         for (Producto p : listaProductos) {
             if (p.getNombre().equalsIgnoreCase(nombreProducto)) {
+
+                double margenUnitario = p.getPrecioVenta() - p.getPrecioCosto(); //calculamos la ganancia unitaria antes de operar
+
+                if (margenUnitario <= 0) {
+
+                    System.out.println("Alerta: ¡el precio de venta es menor o igual al de costo!");
+
+                    return;
+                    }
+
                 if (p.getStock() >= cantidad) {
                     p.setStock(p.getStock() - cantidad);
+
                     double totalVenta = p.getPrecioVenta() * cantidad;
                     // calculo de esta ganancia en especifico
+
                     double gananciaDeEstaVenta = (p.getPrecioVenta() - p.getPrecioCosto()) * cantidad;
                     // sumamos el total de la venta a nuestra caja
+
                     this.cajaDiaria += totalVenta;
                     this.gananciaTotal += gananciaDeEstaVenta;
+
                     System.out.println("Venta exitosa: " +nombreProducto + " x" + cantidad);
                     System.out.println("Total a cobrar: " + totalVenta);
                     System.out.println("Ganancia de esta operacion: " + gananciaDeEstaVenta);
