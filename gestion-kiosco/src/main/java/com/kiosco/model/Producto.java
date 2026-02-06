@@ -1,4 +1,23 @@
 package com.kiosco.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data // crea los getters y setters, toStrings y equals.
+@AllArgsConstructor // hace los constructores con todos los atributos
+@NoArgsConstructor // hace un constructor vacio
+
 public class Producto {
+
+    private Long id;
+    private String nombre;
+    private Double precioCosto;
+    private Double precioVenta;
+    private int stock;
+
+    public void stock(int cantidad) {
+        this.stock += cantidad;
+    }
+
 }
