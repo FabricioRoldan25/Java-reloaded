@@ -9,11 +9,13 @@ import java.util.List;
 public class InventarioService {
 
     private List<Producto > listaProductos;
-    private  double cajaDiaria; // atributo para el dinero acumulado.
+    private double cajaDiaria; // atributo para el dinero acumulado.
+    private double gananciaTotal;
 
     public InventarioService() {
         this.listaProductos = new ArrayList<>();
         this.cajaDiaria = 0.0; // se empieza el dia en cero
+        this.gananciaTotal = 0.0;
     }
 
     public void agregarProducto(Producto p) {
@@ -31,10 +33,14 @@ public class InventarioService {
                 if (p.getStock() >= cantidad) {
                     p.setStock(p.getStock() - cantidad);
                     double totalVenta = p.getPrecioVenta() * cantidad;
+                    // calculo de esta ganancia en especifico
+                    double gananciaDeEstaVenta = (p.getPrecioVenta() - p.getPrecioCosto()) * cantidad;
                     // sumamos el total de la venta a nuestra caja
                     this.cajaDiaria += totalVenta;
+                    this.gananciaTotal += gananciaDeEstaVenta;
                     System.out.println("Venta exitosa: " +nombreProducto + " x" + cantidad);
                     System.out.println("Total a cobrar: " + totalVenta);
+                    System.out.println("Ganancia de esta operacion: " + gananciaDeEstaVenta);
                 } else {
                     System.out.println("Error: no hay suficiente stock de " + nombreProducto);
                 } return;
@@ -42,9 +48,10 @@ public class InventarioService {
         }
         System.out.println("Error: producto no encontrado.");
     }
-    public void mostrarCaja() {
+    public void mostrarReporteFinanciero() {
         System.out.println("---------------------------");
         System.out.println("Dinero total en caja: $" + this.cajaDiaria);
+        System.out.println("Ganancia neta: " + this.gananciaTotal);
         System.out.println("---------------------------");
     }
 

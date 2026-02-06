@@ -13,6 +13,6 @@ public class Main {
         kiosco.realizarVenta("Alfajor", 3);
         kiosco.realizarVenta("alfajor", 5);
 
-        kiosco.mostrarCaja();
+        kiosco.mostrarReporteFinanciero();
     }
 }
