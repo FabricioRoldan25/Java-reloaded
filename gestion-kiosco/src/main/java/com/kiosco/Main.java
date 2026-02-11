@@ -38,7 +38,7 @@ public class Main {
                     System.out.print("Stock inicial: ");
                     int stock = leer.nextInt();
 
-                    kiosco.agregarProducto(new Producto(1L, nombre, costo, venta, stock));
+                    kiosco.agregarProducto(new Producto(null, nombre, costo, venta, stock));
                     break;
 
                 case 2:

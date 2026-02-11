@@ -12,6 +12,8 @@ public class InventarioService {
     private double cajaDiaria; // atributo para el dinero acumulado.
     private double gananciaTotal;
 
+    private long proximoId = 1;
+
     public InventarioService() {
         this.listaProductos = new ArrayList<>();
         this.cajaDiaria = 0.0; // se empieza el dia en cero
@@ -20,8 +22,13 @@ public class InventarioService {
 
     public void agregarProducto(Producto p) {
         if (p != null) {
+
+            p.setId(this.proximoId); //asignamos el id actual del contador al producto
+
             this.listaProductos.add(p);
-            System.out.println("Cargadp con éxito: " + p.getNombre());
+
+            this.proximoId++;
+            System.out.println("Cargado con éxito: " + p.getNombre() + " (ID: " + p.getId() + ")");
         }else {
             System.out.println("Error: el producto no puede ser nulo");
         }
