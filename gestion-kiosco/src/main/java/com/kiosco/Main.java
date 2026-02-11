@@ -21,6 +21,7 @@ public class Main {
             System.out.println("2. Realizar Venta");
             System.out.println("3. Ver Inventario");
             System.out.println("4. Ver Caja y Ganancias");
+            System.out.println("5. Buscar producto por ID");
             System.out.println("0. Salir");
             System.out.print("Seleccione una opción: ");
 
@@ -55,6 +56,21 @@ public class Main {
 
                 case 4:
                     kiosco.mostrarReporteFinanciero();
+                    break;
+
+                case 5:
+                    System.out.println("Ingrese el ID del producto a buscar: ");
+                    long idBusqueda = leer.nextLong();
+                    leer.nextLine();
+
+                    Producto encontrado = kiosco.buscarPorId(idBusqueda);
+
+                    if (encontrado != null){
+                        System.out.println("Producto encontrado: " + encontrado.getNombre());
+                        System.out.println("Stock. " + encontrado.getStock() + " | Precio: $" + encontrado.getPrecioVenta());
+                    }else {
+                        System.out.println("Error: no existe ningun produto con el ID " + idBusqueda);
+                    }
                     break;
 
                 case 0:

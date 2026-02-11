@@ -34,6 +34,18 @@ public class InventarioService {
         }
     }
 
+    public Producto buscarPorId (long idBuscar) {
+        //recorremos lista de productos
+        for (Producto p : listaProductos) {
+            //comparamos el id del producto actual con el q queremos.
+            if (p.getId() == idBuscar) {
+                return p; //si se encuentra, se devuelve y se corta el metodo
+            }
+
+        }
+        return null;
+    }
+
     public void mostrarInventario() {
         System.out.println("\n========= INVENTARIO ACTUAL =========");
 
