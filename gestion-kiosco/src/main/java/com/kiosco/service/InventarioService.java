@@ -34,6 +34,19 @@ public class InventarioService {
         }
     }
 
+    public void actualizarPrecio (long id, double nuevoPrecio){
+        // reutilizamos el metodo de busqueda que ya tenemos
+        Producto p = buscarPorId(id);
+
+        if (p != null) {
+            p.setPrecioVenta(nuevoPrecio); //cambiamos el dato en memoria
+            System.out.println("Precio actualizado: " + p.getNombre() + " ahora cuesta $" + nuevoPrecio);
+        } else {
+            System.out.println("Error: no se encontro el producto con ID " + id);
+        }
+
+    }
+
     public Producto buscarPorId (long idBuscar) {
         //recorremos lista de productos
         for (Producto p : listaProductos) {

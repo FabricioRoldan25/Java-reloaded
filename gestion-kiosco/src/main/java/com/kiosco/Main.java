@@ -22,6 +22,7 @@ public class Main {
             System.out.println("3. Ver Inventario");
             System.out.println("4. Ver Caja y Ganancias");
             System.out.println("5. Buscar producto por ID");
+            System.out.println("6. Actualizar precio de un Producto");
             System.out.println("0. Salir");
             System.out.print("Seleccione una opción: ");
 
@@ -71,6 +72,17 @@ public class Main {
                     }else {
                         System.out.println("Error: no existe ningun produto con el ID " + idBusqueda);
                     }
+                    break;
+
+                case 6:
+                    System.out.println("Ingrese el ID del producto a actualizar: ");
+                    long idAct = leer.nextLong();
+
+                    System.out.println("Ingrese el NUEVO precio de venta: ");
+                    double precioNuevo = leer.nextDouble();
+                    leer.nextLine();
+
+                    kiosco.actualizarPrecio(idAct, precioNuevo);
                     break;
 
                 case 0:
