@@ -23,6 +23,7 @@ public class Main {
             System.out.println("4. Ver Caja y Ganancias");
             System.out.println("5. Buscar producto por ID");
             System.out.println("6. Actualizar precio de un Producto");
+            System.out.println("7. Eliminar Producto");
             System.out.println("0. Salir");
             System.out.print("Seleccione una opción: ");
 
@@ -84,6 +85,20 @@ public class Main {
 
                     kiosco.actualizarPrecio(idAct, precioNuevo);
                     break;
+
+                case 7:
+                    System.out.println("Ingrese el ID del producto a ELIMINAR: ");
+                    long idEliminar = leer.nextLong();
+                    leer.nextLine();
+
+                    System.out.println("¿Estas seguro de eliminar el producto? (S/N) ");
+                    String confirmacion = leer.nextLine();
+
+                    if (confirmacion.equalsIgnoreCase("S")){
+                        kiosco.eliminarProducto(idEliminar);
+                    }else {
+                        System.out.println("Operacion cancelada");
+                    }
 
                 case 0:
                     System.out.println("Saliendo del sistema... ¡Buen trabajo hoy!");

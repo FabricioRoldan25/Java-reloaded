@@ -47,6 +47,17 @@ public class InventarioService {
 
     }
 
+    public void eliminarProducto (long id) {
+        //vamos a remover el id del producto p si es igual al id que le vamos a pasar
+        boolean eliminado = listaProductos.removeIf(p -> p.getId() == id);
+        if (eliminado) {
+            System.out.println("Producto con ID " + id + " eliminado correctamente." );
+        }else {
+            System.out.println("Error: no se encontro ningun producto con el ID " + id);
+        }
+
+    }
+
     public Producto buscarPorId (long idBuscar) {
         //recorremos lista de productos
         for (Producto p : listaProductos) {
