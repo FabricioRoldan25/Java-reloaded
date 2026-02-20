@@ -8,6 +8,7 @@ public class Main {
     public static void main(String[] args) {
         // instanciamos nuestro servicio (gestor de kiosco)
         InventarioService kiosco = new InventarioService();
+        kiosco.cargarDatos();
 
         //instanciamos el scanner para leer.
         Scanner leer = new Scanner(System.in);

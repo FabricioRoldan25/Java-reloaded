@@ -1,5 +1,6 @@
 package com.kiosco.model;
 
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor // hace los constructores con todos los atributos
 @NoArgsConstructor // hace un constructor vacio
 
-public class Producto {
+public class Producto implements Serializable {
+
+    private static final long serialVersionUID = 1L; // es como la version del archivo
 
     private Long id;
     private String nombre;

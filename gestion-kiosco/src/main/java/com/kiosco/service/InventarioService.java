@@ -1,5 +1,6 @@
 package com.kiosco.service;
 
+import java.io.*;
 import com.kiosco.model.Producto;
 import org.w3c.dom.ls.LSOutput;
 
@@ -28,6 +29,8 @@ public class InventarioService {
             this.listaProductos.add(p);
 
             this.proximoId++;
+            guardarDatos();
+            System.out.println("Cargado con éxito.");
             System.out.println("Cargado con éxito: " + p.getNombre() + " (ID: " + p.getId() + ")");
         }else {
             System.out.println("Error: el producto no puede ser nulo");
@@ -41,6 +44,7 @@ public class InventarioService {
         if (p != null) {
             p.setPrecioVenta(nuevoPrecio); //cambiamos el dato en memoria
             System.out.println("Precio actualizado: " + p.getNombre() + " ahora cuesta $" + nuevoPrecio);
+            guardarDatos();
         } else {
             System.out.println("Error: no se encontro el producto con ID " + id);
         }
@@ -51,9 +55,41 @@ public class InventarioService {
         //vamos a remover el id del producto p si es igual al id que le vamos a pasar
         boolean eliminado = listaProductos.removeIf(p -> p.getId() == id);
         if (eliminado) {
+            guardarDatos();
+            System.out.println("Eliminado.");
             System.out.println("Producto con ID " + id + " eliminado correctamente." );
         }else {
             System.out.println("Error: no se encontro ningun producto con el ID " + id);
+        }
+
+    }
+    public void guardarDatos() {
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("inventario.dat"))) {
+            oos.writeObject(this.listaProductos);
+
+            oos.writeLong(this.proximoId);
+            System.out.println("Sincronizando datos con el disco duro...");
+
+        } catch (IOException e) {
+            System.out.println("Error al guardar: " + e.getMessage());
+        }
+    }
+
+    public void cargarDatos() {
+
+        File archivo = new File("inventario.dat"); //verificamos si el archivo existe antes de intentar leerlo
+        if (!archivo.exists()){
+            System.out.println("No se encontro historial previo. Iniciando sistema limpio");
+            return;
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream( new FileInputStream(archivo))) {
+            this.listaProductos = (List<Producto>) ois.readObject();
+            this.proximoId = ois.readLong();
+            System.out.println("¡Datos recuperados con exito!");
+        }catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error al cargar datos: " + e.getMessage());
         }
 
     }
@@ -116,6 +152,8 @@ public class InventarioService {
                     System.out.println("Venta exitosa: " +nombreProducto + " x" + cantidad);
                     System.out.println("Total a cobrar: " + totalVenta);
                     System.out.println("Ganancia de esta operacion: " + gananciaDeEstaVenta);
+
+                    guardarDatos();
                 } else {
                     System.out.println("Error: no hay suficiente stock de " + nombreProducto);
                 } return;
