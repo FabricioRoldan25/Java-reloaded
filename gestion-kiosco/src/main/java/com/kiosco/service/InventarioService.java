@@ -1,5 +1,9 @@
 package com.kiosco.service;
 
+import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import java.io.*;
 import com.kiosco.model.Producto;
 import org.w3c.dom.ls.LSOutput;
@@ -166,6 +170,30 @@ public class InventarioService {
         System.out.println("Dinero total en caja: $" + this.cajaDiaria);
         System.out.println("Ganancia neta: " + this.gananciaTotal);
         System.out.println("---------------------------");
+    }
+
+    public void generarReporteCierre () {
+        String nombreArchivo = "reporte_cierre.txt";
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(nombreArchivo, true))) {
+        // el true dentro del filewriter permite que cada cierre se guarde abajo del anterior
+            writer.println("====== REPORTE DE CIERRE DE CAJA ======");
+            writer.println("Ventas del dia: $" + this.cajaDiaria);
+            writer.println("Ganancia estimada: $" + this.gananciaTotal);
+            writer.println("Productos totales en inventario: " + this.listaProductos.size());
+            writer.println("---------------------------------------");
+            writer.println("");
+
+            this.cajaDiaria = 0; //reseteamos la caja para el proximo turno
+
+            guardarDatos(); //guardamos el cambio para nuestro archivo .dat
+
+            System.out.println("¡Reporte generado! Buscá el archivo 'reporte.cierre.txt' en tu carpeta");
+
+        } catch (Exception e) {
+            System.out.println("Error técnico al escribir el reporte: " + e.getMessage());
+        }
+
     }
 
 }

@@ -25,6 +25,7 @@ public class Main {
             System.out.println("5. Buscar producto por ID");
             System.out.println("6. Actualizar precio de un Producto");
             System.out.println("7. Eliminar Producto");
+            System.out.println("8. Realizar cierre de caja");
             System.out.println("0. Salir");
             System.out.print("Seleccione una opción: ");
 
@@ -100,6 +101,16 @@ public class Main {
                     }else {
                         System.out.println("Operacion cancelada");
                     }
+
+                case 8:
+                    System.out.println("¿Confirmar cierre de caja? (S/N)");
+                    String confirmacionCierre = leer.nextLine();
+
+                    if (confirmacionCierre.equalsIgnoreCase("S")) {
+                        kiosco.generarReporteCierre();
+                    }else {
+                        System.out.println("Operacion cancelada");
+                    } break;
 
                 case 0:
                     System.out.println("Saliendo del sistema... ¡Buen trabajo hoy!");
