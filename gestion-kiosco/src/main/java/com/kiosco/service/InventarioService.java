@@ -128,9 +128,9 @@ public class InventarioService {
         System.out.println("=====================================\n");
     }
 
-    public void realizarVenta(String nombreProducto,int cantidad) {
-        for (Producto p : listaProductos) {
-            if (p.getNombre().equalsIgnoreCase(nombreProducto)) {
+    public void realizarVenta(Long id,int cantidad) {
+            Producto p = buscarPorId(id);
+            if (p.getId().equals(id)) {
 
                 double margenUnitario = p.getPrecioVenta() - p.getPrecioCosto(); //calculamos la ganancia unitaria antes de operar
 
@@ -153,16 +153,15 @@ public class InventarioService {
                     this.cajaDiaria += totalVenta;
                     this.gananciaTotal += gananciaDeEstaVenta;
 
-                    System.out.println("Venta exitosa: " +nombreProducto + " x" + cantidad);
+
                     System.out.println("Total a cobrar: " + totalVenta);
                     System.out.println("Ganancia de esta operacion: " + gananciaDeEstaVenta);
 
                     guardarDatos();
                 } else {
-                    System.out.println("Error: no hay suficiente stock de " + nombreProducto);
+                    System.out.println("Error: No existe el producto con ID " + id);
                 } return;
             }
-        }
         System.out.println("Error: producto no encontrado.");
     }
     public void mostrarReporteFinanciero() {

@@ -47,11 +47,11 @@ public class Main {
                     break;
 
                 case 2:
-                    System.out.print("¿Qué producto desea vender?: ");
-                    String prodVenta = leer.nextLine();
-                    System.out.print("Cantidad: ");
+                    System.out.print("¿Qué producto desea vender? Ingrese el ID: ");
+                    Long idVenta = leer.nextLong();
+                    System.out.print("Cantidad a vender: ");
                     int cant = leer.nextInt();
-                    kiosco.realizarVenta(prodVenta, cant);
+                    kiosco.realizarVenta(idVenta, cant);
                     break;
 
                 case 3:

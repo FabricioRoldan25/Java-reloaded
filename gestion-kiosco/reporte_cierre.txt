@@ -10,3 +10,9 @@ Ganancia estimada: $0.0
 Productos totales en inventario: 2
 ---------------------------------------
 
+====== REPORTE DE CIERRE DE CAJA ======
+Ventas del dia: $9750.0
+Ganancia estimada: $3750.0
+Productos totales en inventario: 3
+---------------------------------------
+
