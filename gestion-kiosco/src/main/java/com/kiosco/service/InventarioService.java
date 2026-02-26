@@ -4,9 +4,12 @@ import java.io.PrintWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import java.io.*;
 import com.kiosco.model.Producto;
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +28,24 @@ public class InventarioService {
         this.gananciaTotal = 0.0;
     }
 
-    public void agregarProducto(Producto p) {
+    public void agregarProductoDB(Producto p) {
+        //conexion al cable creado anteriormente
+        String sql = "INTERT INTO productos (nombre, precio_costo, precio_venta, stock) VALUES (?, ?, ?, ?)";
+        try (Connection con = ConexionDB.getConexion();
+            PreparedStatement ps = con.prepareStatement(sql)) {
+        //llenamos los signos de preguntas con datos
+        ps.setString(1, p.getNombre());
+        ps.setDouble(2, p.getPrecioCosto());
+        ps.setDouble(3, p.getPrecioVenta());
+        ps.setInt(4, p.getStock());
+
+        ps.executeUpdate();
+            System.out.println("¡Producto guardado en MySQL con exito!");
+
+        }catch (SQLException e) {
+            System.out.println("Error al insertar en la base de datos: " + e.getMessage());
+        }
+
         if (p != null) {
 
             p.setId(this.proximoId); //asignamos el id actual del contador al producto
