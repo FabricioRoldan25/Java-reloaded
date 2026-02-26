@@ -1,11 +1,18 @@
 package com.kiosco;
 
 import com.kiosco.model.Producto;
+import com.kiosco.service.ConexionDB;
 import com.kiosco.service.InventarioService;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        if (ConexionDB.getConexion() != null){
+            System.out.println("¡Conexion exitosa a MySQL!");
+        } else {
+            System.out.println("Fallo en la conexion. Revisar password");
+            return;
+        }
         // instanciamos nuestro servicio (gestor de kiosco)
         InventarioService kiosco = new InventarioService();
         kiosco.cargarDatos();
