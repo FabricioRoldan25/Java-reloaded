@@ -30,7 +30,7 @@ public class InventarioService {
 
     public void agregarProductoDB(Producto p) {
         //conexion al cable creado anteriormente
-        String sql = "INTERT INTO productos (nombre, precio_costo, precio_venta, stock) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO productos (nombre, precio_costo, precio_venta, stock) VALUES (?, ?, ?, ?)";
         try (Connection con = ConexionDB.getConexion();
             PreparedStatement ps = con.prepareStatement(sql)) {
         //llenamos los signos de preguntas con datos

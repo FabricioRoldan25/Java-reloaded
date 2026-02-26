@@ -41,7 +41,7 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                    System.out.print("Nombre del producto: ");
+                    System.out.print("Nombre del productos: ");
                     String nombre = leer.nextLine();
                     System.out.print("Precio Costo: ");
                     double costo = leer.nextDouble();
