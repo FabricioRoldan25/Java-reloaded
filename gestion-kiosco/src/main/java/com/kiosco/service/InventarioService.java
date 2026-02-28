@@ -77,15 +77,31 @@ public class InventarioService {
 
     }
 
-    public void eliminarProducto (long id) {
-        //vamos a remover el id del producto p si es igual al id que le vamos a pasar
-        boolean eliminado = listaProductos.removeIf(p -> p.getId() == id);
-        if (eliminado) {
-            guardarDatosDB();
-            System.out.println("Eliminado.");
-            System.out.println("Producto con ID " + id + " eliminado correctamente." );
-        }else {
-            System.out.println("Error: no se encontro ningun producto con el ID " + id);
+    public void eliminarProductoBD (long id) {
+
+        String sql = "DELETE FROM productos WHERE id = ?";
+
+        try (Connection con = ConexionDB.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setLong(1, id);
+            int filasAfectadas = ps.executeUpdate();
+
+            if (filasAfectadas > 0) {
+
+                boolean eliminadoDeLista = listaProductos.removeIf(p -> p.getId() == id);
+
+                if (eliminadoDeLista) {
+                    System.out.println("Eliminado.");
+                    System.out.println("Producto con ID " + id + " eliminado correctamente");
+                }else {
+                    System.out.println("Error: no se encontro ningun producto con el ID " + id + " en la base de datos.");
+                }
+
+            }
+
+        }catch (SQLException e) {
+            System.out.println("Error critico al eliminar de la base de datos: " + e.getMessage());
         }
 
     }
