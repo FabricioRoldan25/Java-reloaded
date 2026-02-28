@@ -15,7 +15,7 @@ public class Main {
         }
         // instanciamos nuestro servicio (gestor de kiosco)
         InventarioService kiosco = new InventarioService();
-        kiosco.cargarDatos();
+        kiosco.cargarDatosDB();
 
         //instanciamos el scanner para leer.
         Scanner leer = new Scanner(System.in);
@@ -50,7 +50,7 @@ public class Main {
                     System.out.print("Stock inicial: ");
                     int stock = leer.nextInt();
 
-                    kiosco.agregarProductoDB(new Producto(null, nombre, costo, venta, stock));
+                    kiosco.agregarProductoDB(new Producto());
                     break;
 
                 case 2:

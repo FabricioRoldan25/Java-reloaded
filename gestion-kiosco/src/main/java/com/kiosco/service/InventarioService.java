@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import java.io.*;
 import com.kiosco.model.Producto;
@@ -53,7 +55,7 @@ public class InventarioService {
             this.listaProductos.add(p);
 
             this.proximoId++;
-            guardarDatos();
+            guardarDatosDB();
             System.out.println("Cargado con éxito.");
             System.out.println("Cargado con éxito: " + p.getNombre() + " (ID: " + p.getId() + ")");
         }else {
@@ -68,7 +70,7 @@ public class InventarioService {
         if (p != null) {
             p.setPrecioVenta(nuevoPrecio); //cambiamos el dato en memoria
             System.out.println("Precio actualizado: " + p.getNombre() + " ahora cuesta $" + nuevoPrecio);
-            guardarDatos();
+            guardarDatosDB();
         } else {
             System.out.println("Error: no se encontro el producto con ID " + id);
         }
@@ -79,7 +81,7 @@ public class InventarioService {
         //vamos a remover el id del producto p si es igual al id que le vamos a pasar
         boolean eliminado = listaProductos.removeIf(p -> p.getId() == id);
         if (eliminado) {
-            guardarDatos();
+            guardarDatosDB();
             System.out.println("Eliminado.");
             System.out.println("Producto con ID " + id + " eliminado correctamente." );
         }else {
@@ -87,7 +89,7 @@ public class InventarioService {
         }
 
     }
-    public void guardarDatos() {
+    public void guardarDatosDB() {
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("inventario.dat"))) {
             oos.writeObject(this.listaProductos);
@@ -100,7 +102,33 @@ public class InventarioService {
         }
     }
 
-    public void cargarDatos() {
+    public void cargarDatosDB() {
+
+        this.listaProductos.clear();
+
+        String sql = "SELECT * FROM productos";
+
+        try (Connection con = ConexionDB.getConexion();
+             Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Producto p = new Producto();
+
+                p.setId(rs.getLong("id"));
+                p.setNombre(rs.getString("nombre"));
+                p.setPrecioCosto(rs.getDouble("precio_costo"));
+                p.setPrecioVenta(rs.getDouble("precio_venta"));
+                p.setStock(rs.getInt("stock"));
+
+                p.setId(rs.getLong("id"));
+
+                this.listaProductos.add(p);
+            }
+            System.out.println("¡Datos sincronizados! se cargaron " +listaProductos.size() + " productos.");
+        }catch (SQLException e) {
+            System.out.println("Error al cargar datos desde MySQL: " + e.getMessage());
+        }
 
         File archivo = new File("inventario.dat"); //verificamos si el archivo existe antes de intentar leerlo
         if (!archivo.exists()){
@@ -177,7 +205,7 @@ public class InventarioService {
                     System.out.println("Total a cobrar: " + totalVenta);
                     System.out.println("Ganancia de esta operacion: " + gananciaDeEstaVenta);
 
-                    guardarDatos();
+                    guardarDatosDB();
                 } else {
                     System.out.println("Error: No existe el producto con ID " + id);
                 } return;
@@ -205,7 +233,7 @@ public class InventarioService {
 
             this.cajaDiaria = 0; //reseteamos la caja para el proximo turno
 
-            guardarDatos(); //guardamos el cambio para nuestro archivo .dat
+            guardarDatosDB(); //guardamos el cambio para nuestro archivo .dat
 
             System.out.println("¡Reporte generado! Buscá el archivo 'reporte.cierre.txt' en tu carpeta");
 
