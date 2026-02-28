@@ -31,6 +31,12 @@ public class InventarioService {
     }
 
     public void agregarProductoDB(Producto p) {
+
+        System.out.println("DEBUG - Nombre: " + p.getNombre());
+        System.out.println("DEBUG - Costo: " + p.getPrecioCosto());
+        System.out.println("DEBUG - Venta: " + p.getPrecioVenta());
+        System.out.println("DEBUG - Stock: " + p.getStock());
+
         //conexion al cable creado anteriormente
         String sql = "INSERT INTO productos (nombre, precio_costo, precio_venta, stock) VALUES (?, ?, ?, ?)";
         try (Connection con = ConexionDB.getConexion();

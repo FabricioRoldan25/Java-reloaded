@@ -41,16 +41,27 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                    System.out.print("Nombre del productos: ");
-                    String nombre = leer.nextLine();
-                    System.out.print("Precio Costo: ");
-                    double costo = leer.nextDouble();
-                    System.out.print("Precio Venta: ");
-                    double venta = leer.nextDouble();
-                    System.out.print("Stock inicial: ");
-                    int stock = leer.nextInt();
+                    System.out.println("--- Agregar Nuevo Producto ---");
+                    System.out.print("Nombre: ");
+                    String n = leer.next();
+                    System.out.print("Costo: ");
+                    double c = leer.nextDouble();
+                    System.out.print("Venta: ");
+                    double v = leer.nextDouble();
+                    System.out.print("Stock: ");
+                    int s = leer.nextInt();
 
-                    kiosco.agregarProductoDB(new Producto());
+                    Producto nuevoP = new Producto();
+                    nuevoP.setNombre(n);
+                    nuevoP.setPrecioCosto(c);
+                    nuevoP.setPrecioVenta(v);
+                    nuevoP.setStock(s);
+
+                    if(nuevoP.getNombre() != null) {
+                        kiosco.agregarProductoDB(nuevoP);
+                    } else {
+                        System.out.println("Error: El objeto no se creó correctamente.");
+                    }
                     break;
 
                 case 2:
@@ -104,7 +115,7 @@ public class Main {
                     String confirmacion = leer.nextLine();
 
                     if (confirmacion.equalsIgnoreCase("S")){
-                        kiosco.eliminarProducto(idEliminar);
+                        kiosco.eliminarProductoBD(idEliminar);
                     }else {
                         System.out.println("Operacion cancelada");
                     }

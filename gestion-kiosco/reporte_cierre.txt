@@ -22,3 +22,9 @@ Ganancia estimada: $0.0
 Productos totales en inventario: 4
 ---------------------------------------
 
+====== REPORTE DE CIERRE DE CAJA ======
+Ventas del dia: $0.0
+Ganancia estimada: $0.0
+Productos totales en inventario: 0
+---------------------------------------
+

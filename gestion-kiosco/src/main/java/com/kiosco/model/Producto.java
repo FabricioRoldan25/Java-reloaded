@@ -15,8 +15,8 @@ public class Producto implements Serializable {
 
     private Long id;
     private String nombre;
-    private Double precioCosto;
-    private Double precioVenta;
+    private double precioCosto;
+    private double precioVenta;
     private int stock;
 
     public void stock(int cantidad) {
