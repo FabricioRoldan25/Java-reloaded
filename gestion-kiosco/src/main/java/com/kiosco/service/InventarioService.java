@@ -130,20 +130,6 @@ public class InventarioService {
             System.out.println("Error al cargar datos desde MySQL: " + e.getMessage());
         }
 
-        File archivo = new File("inventario.dat"); //verificamos si el archivo existe antes de intentar leerlo
-        if (!archivo.exists()){
-            System.out.println("No se encontro historial previo. Iniciando sistema limpio");
-            return;
-        }
-
-        try (ObjectInputStream ois = new ObjectInputStream( new FileInputStream(archivo))) {
-            this.listaProductos = (List<Producto>) ois.readObject();
-            this.proximoId = ois.readLong();
-            System.out.println("¡Datos recuperados con exito!");
-        }catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error al cargar datos: " + e.getMessage());
-        }
-
     }
 
     public Producto buscarPorId (long idBuscar) {
@@ -191,6 +177,20 @@ public class InventarioService {
 
                 if (p.getStock() >= cantidad) {
                     p.setStock(p.getStock() - cantidad);
+
+                String sql = "UPDATE productos SET stock = ? WHERE id = ?";
+
+                try (Connection con = ConexionDB.getConexion();
+                     PreparedStatement ps = con.prepareStatement(sql)) {
+
+                    ps.setInt(1, p.getStock());
+                    ps.setLong(2, p.getId());
+
+                    ps.executeUpdate();
+                    System.out.println("Sincronizado: El stock en la base de datos ha sido actualizado.");
+                } catch (SQLException e) {
+                    System.out.println("Error crítico al actualizar stock en BD: " +e.getMessage());
+                }
 
                     double totalVenta = p.getPrecioVenta() * cantidad;
                     // calculo de esta ganancia en especifico
